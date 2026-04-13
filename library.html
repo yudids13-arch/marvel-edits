@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clip Library — ReelForge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">REELFORGE</a>
+  <div class="nav-links">
+    <a href="editor.html">Editor</a>
+    <a href="library.html" class="active">Library</a>
+  </div>
+</nav>
+
+<div class="library-layout">
+
+  <div class="library-header">
+    <div>
+      <h1 class="lib-title">Clip Library</h1>
+      <div class="lib-sub" id="clipCount">0 clips stored</div>
+    </div>
+    <div class="lib-header-actions">
+      <label for="libUpload" class="btn-primary">+ Add Clips</label>
+      <input type="file" id="libUpload" accept="video/*" multiple style="display:none">
+      <button class="btn-ghost" onclick="clearLibrary()">Clear All</button>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <input type="text" class="filter-search" id="searchInput" placeholder="Search clips by name or tag..." oninput="filterClips()">
+    <div class="filter-tags">
+      <div class="filter-label">Filter:</div>
+      <div class="tag-filter active" data-filter="all" onclick="setFilter('all', this)">All</div>
+      <div class="tag-filter" data-filter="character" onclick="setFilter('character', this)">Character</div>
+      <div class="tag-filter" data-filter="action" onclick="setFilter('action', this)">Action</div>
+      <div class="tag-filter" data-filter="emotion" onclick="setFilter('emotion', this)">Emotion</div>
+      <div class="tag-filter" data-filter="reaction" onclick="setFilter('reaction', this)">Reaction</div>
+      <div class="tag-filter" data-filter="battle" onclick="setFilter('battle', this)">Battle</div>
+      <div class="tag-filter" data-filter="cinematic" onclick="setFilter('cinematic', this)">Cinematic</div>
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')">⊞ Grid</button>
+      <button class="view-btn" id="listViewBtn" onclick="setView('list')">≡ List</button>
+    </div>
+  </div>
+
+  <!-- Collections Bar -->
+  <div class="collections-bar">
+    <div class="collection-label">Collections:</div>
+    <div class="collection-pill active" data-collection="all" onclick="setCollection('all', this)">All Clips</div>
+    <div class="collection-pill" data-collection="battle" onclick="setCollection('battle', this)">Battle Scenes</div>
+    <div class="collection-pill" data-collection="emotional" onclick="setCollection('emotional', this)">Emotional Moments</div>
+    <div class="collection-pill" data-collection="highlight" onclick="setCollection('highlight', this)">Highlights</div>
+    <button class="collection-add" onclick="addCollection()">+ New Collection</button>
+  </div>
+
+  <!-- Empty State -->
+  <div id="libraryEmpty" class="library-empty">
+    <div class="empty-icon-large">◈</div>
+    <h3>No Clips Yet</h3>
+    <p>Upload video clips to start building your library. Tag and organize them for fast access when generating edits.</p>
+    <label for="libUpload" class="btn-primary" style="display:inline-block; margin-top:1rem;">Upload Your First Clip</label>
+  </div>
+
+  <!-- Clip Grid -->
+  <div class="clip-grid" id="clipGrid" style="display:none"></div>
+
+  <!-- Clip List -->
+  <div class="clip-list-view" id="clipListView" style="display:none">
+    <div class="list-header">
+      <span>Name</span>
+      <span>Duration</span>
+      <span>Tags</span>
+      <span>Collection</span>
+      <span>Actions</span>
+    </div>
+    <div id="clipListItems"></div>
+  </div>
+
+</div>
+
+<!-- Clip Detail Modal -->
+<div class="modal-overlay" id="clipModal" style="display:none" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Clip Name</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-video-wrap">
+      <video id="modalVideo" controls style="width:100%; border-radius:8px; background:#000;"></video>
+    </div>
+    <div class="modal-fields">
+      <div class="modal-field">
+        <label>Rename Clip</label>
+        <input type="text" id="modalName" class="modal-input">
+      </div>
+      <div class="modal-field">
+        <label>Tags (comma-separated)</label>
+        <input type="text" id="modalTags" class="modal-input" placeholder="character, action, emotional, high-intensity...">
+      </div>
+      <div class="modal-field">
+        <label>Collection</label>
+        <select id="modalCollection" class="modal-input">
+          <option value="all">All Clips</option>
+          <option value="battle">Battle Scenes</option>
+          <option value="emotional">Emotional Moments</option>
+          <option value="highlight">Highlights</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <label>Notes</label>
+        <textarea id="modalNotes" class="modal-input modal-textarea" placeholder="Editor notes about this clip — what moments are usable, best timestamps, etc."></textarea>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="saveClipData()">Save Changes</button>
+      <button class="btn-ghost" onclick="deleteClipFromModal()">Delete Clip</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
