@@ -1,0 +1,33 @@
+{
+  "jarvis": {
+    "name": "JARVIS",
+    "version": "1.0.0",
+    "mode": "offline",
+    "project_root": ".",
+    "database": "jarvis_knowledge.db"
+  },
+  "nlp": {
+    "enabled": true,
+    "model": "en_core_web_sm",
+    "features": [
+      "entity_recognition",
+      "tokenization",
+      "pos_tagging"
+    ]
+  },
+  "file_operations": {
+    "max_file_size_mb": 100,
+    "allowed_extensions": [
+      "*"
+    ]
+  },
+  "web_interface": {
+    "host": "0.0.0.0",
+    "port": 5000,
+    "debug": true
+  },
+  "knowledge_base": {
+    "auto_save": true,
+    "max_items": 10000
+  }
+}

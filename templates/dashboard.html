@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS - AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>🤖 JARVIS</h1>
+                <p class="subtitle">Your Personal Offline AI Assistant</p>
+            </div>
+            <div class="status-indicator">
+                <span class="status-dot online"></span>
+                <span>Online - Offline Mode</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="chat-container">
+                <div class="chat-box" id="chatBox">
+                    <div class="message jarvis-message">
+                        <p>Good day, Sir/Madam. I am JARVIS, your personal AI assistant. How may I be of service?</p>
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <input type="text" id="userInput" placeholder="Type a command or question..."
+                           class="input-field" autocomplete="off">
+                    <button id="sendBtn" class="send-btn">Send</button>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Quick Commands</h3>
+                    <div class="command-buttons">
+                        <button class="cmd-btn" onclick="sendCommand('help')">Help</button>
+                        <button class="cmd-btn" onclick="sendCommand('list')">List Files</button>
+                        <button class="cmd-btn" onclick="sendCommand('search')">Search</button>
+                        <button class="cmd-btn" onclick="loadCommands()">Commands</button>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>System Info</h3>
+                    <div id="systemInfo" class="system-info">
+                        <p>Loading...</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Knowledge Base</h3>
+                    <div id="knowledgeInfo" class="knowledge-info">
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Commands Modal -->
+    <div id="commandsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Available Commands</h2>
+            <div id="commandsList"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
